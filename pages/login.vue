@@ -9,7 +9,9 @@ const password = ref('');
 const otpLogin = async () => {
     try {
         loading.value = true
-        const { error } = await client.auth.signInWithOtp({ email: email.value })
+        const { error } = await client.auth.signInWithOtp({ email: email.value },{
+            redirectTo: window.location.origin
+        })
 
         if (error) throw error
 
@@ -27,6 +29,8 @@ const emailLogin = async () => {
         let { data, error } = await client.auth.signInWithPassword({
             email:  email.value,
             password: password.value
+        },{
+            redirectTo: window.location.origin
         })
 
         if (error) throw error
