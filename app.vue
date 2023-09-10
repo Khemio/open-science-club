@@ -8,15 +8,18 @@ const { data: discussions } = await useAsyncData('discussions', async () => {
         posts(id, title)
     `)
     if(error) console.log(error);
-    else {
-      console.log(data);
-      return data;
-    }
+    
+    return data;
 })
+
+async function test() {
+  console.log(discussions);
+}
 </script>
 
 <template>
   <div class="min-h-screen flex flex-col justify-between">
+    {{ test() }}
     <Navigation />
     <NuxtPage/>
     <Footer />
