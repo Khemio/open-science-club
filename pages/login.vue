@@ -10,7 +10,7 @@ const otpLogin = async () => {
     try {
         loading.value = true
         const { error } = await client.auth.signInWithOtp({ email: email.value },{
-            redirectTo: window.location.origin
+            redirectTo: 'open-science-club.vercel.app'
         })
 
         if (error) throw error
