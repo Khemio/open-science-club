@@ -1,9 +1,9 @@
 <script setup>
 // const owner = useSupabaseUser().value.id;
-const owner = useSupabaseUser().value;
+const user = useSupabaseUser();
 const client = useSupabaseClient();
 
-console.log(owner);
+console.log(user);
 
 // const { data: user } = await useAsyncData('user', async () => {
 //     const { data, error } = await client.from('profiles').select(`
@@ -57,7 +57,7 @@ console.log(owner);
             </ul>
             <ul v-else>
                 <li>
-                    {{console.log(useSupabaseUser())}}
+                    {{console.log(user)}}
                     Log Out
                 </li>
             </ul>
