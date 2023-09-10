@@ -1,6 +1,8 @@
 <script setup>
 const client = useSupabaseClient();
 
+const url = 'https://open-science-club.vercel.app/';
+
 const loading = ref(false);
 const loginType = ref('email');
 const email = ref('');
@@ -9,8 +11,10 @@ const password = ref('');
 const otpLogin = async () => {
     try {
         loading.value = true
-        const { error } = await client.auth.signInWithOtp({ email: email.value },{
-            redirectTo: 'open-science-club.vercel.app'
+        const { error } = await client.auth.signInWithOtp({ email: email.value ,
+            options: {
+                emailRedirectTo: url
+            }
         })
 
         if (error) throw error
@@ -30,7 +34,7 @@ const emailLogin = async () => {
             email:  email.value,
             password: password.value
         },{
-            redirectTo: window.location.origin
+            emailRedirectTo: url
         })
 
         if (error) throw error
