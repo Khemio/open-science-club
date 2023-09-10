@@ -1,6 +1,6 @@
 <script setup>
 const client = useSupabaseClient();
-const owner = useSupabaseUser().value.id;
+const user = useSupabaseUser();
 
 const { data: announcements } = await useAsyncData('announcements', async () => {
     const { data, error } = await client.from('announcements').select(`
@@ -26,7 +26,7 @@ async function createAnnouncemnt() {
 
     const { data: announcemnt } = await useAsyncData('announcemnt', async () => {
         const { data, error } = await client.from('announcements').insert({
-            owner: owner,
+            owner: user.value.id,
             // discussion_id: discussion.value,
             title: title.value,
             content: content.value

@@ -13,7 +13,7 @@ const client = useSupabaseClient();
 // })
 
 async function logOut() {
-    let { error } = await supabase.auth.signOut()
+    let { error } = await client.auth.signOut()
 }
 </script>
 
@@ -58,8 +58,8 @@ async function logOut() {
                 </li>
             </ul>
             <ul v-else>
-                <li @click="logOut()">
-                    Log Out
+                <li>
+                    <button @click="logOut()">Log Out</button>
                 </li>
             </ul>
         </div>

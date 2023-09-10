@@ -2,7 +2,7 @@
 
 const client = useSupabaseClient();
 const route = useRoute();
-const owner = useSupabaseUser().value.id;
+const user = useSupabaseUser();
 
 const showModal = ref(false)
 const content = ref('');
@@ -22,7 +22,7 @@ async function createComment() {
 
 const { data: comment } = await useAsyncData('comment', async () => {
     const { data, error } = await client.from('comments').insert({
-        owner: owner,
+        owner: user.value.id,
         post: post.value[0].id,
         // title: title.value,
         content: content.value
