@@ -1,5 +1,6 @@
 <script setup>
-const owner = useSupabaseUser().value.id;
+// const owner = useSupabaseUser().value.id;
+const owner = useSupabaseUser().value;
 const client = useSupabaseClient();
 
 console.log(owner);
