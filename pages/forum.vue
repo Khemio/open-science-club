@@ -4,6 +4,8 @@
 const client = useSupabaseClient();
 const owner = useSupabaseUser().value.id;
 
+console.log(client);
+
 const { data: discussions } = await useAsyncData('discussions', async () => {
     const { data, error } = await client.from('discussions').select(`
         *,
@@ -52,7 +54,7 @@ function handleClose() {
 <template>
     <div class="w-11/12 mx-auto my-10 grid grid-cols-5 gap-5 min-h-screen border border-black">
         <div class="col-span-4 border-r border-black">
-            {{console.log(client)}}
+            <!-- {{console.log(client)}} -->
             <div v-for="disc in discussions" class="px-3 py-7 border-b border-black"
             @click="() => {
                 handleClick(disc.name);
