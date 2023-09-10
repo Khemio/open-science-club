@@ -1,6 +1,18 @@
 <script setup>
 const user = useSupabaseUser()
-console.log(useSupabaseClient())
+const client = useSupabaseClient();
+
+const { data: discussions } = await useAsyncData('discussions', async () => {
+    const { data, error } = await client.from('discussions').select(`
+        *,
+        posts(id, title)
+    `)
+    if(error) console.log(error);
+    else {
+      console.log(data);
+      return data;
+    }
+})
 </script>
 
 <template>
