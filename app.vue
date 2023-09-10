@@ -1,6 +1,6 @@
 <script setup>
 const user = useSupabaseUser()
-
+console.log(useSupabaseClient())
 </script>
 
 <template>

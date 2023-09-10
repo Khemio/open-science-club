@@ -4,7 +4,6 @@
 const client = useSupabaseClient();
 const owner = useSupabaseUser().value.id;
 
-console.log(client);
 
 const { data: discussions } = await useAsyncData('discussions', async () => {
     const { data, error } = await client.from('discussions').select(`
