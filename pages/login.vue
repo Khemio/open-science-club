@@ -1,7 +1,9 @@
 <script setup>
 const client = useSupabaseClient();
 
-const url = 'https://open-science-club.vercel.app/';
+const config = useRuntimeConfig()
+// const url = 'https://open-science-club.vercel.app/';
+const url = config.public.url;
 
 const loading = ref(false);
 const loginType = ref('email');
