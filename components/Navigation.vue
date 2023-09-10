@@ -3,8 +3,6 @@
 const user = useSupabaseUser();
 const client = useSupabaseClient();
 
-console.log(user);
-
 // const { data: user } = await useAsyncData('user', async () => {
 //     const { data, error } = await client.from('profiles').select(`
 //         *
@@ -61,7 +59,6 @@ async function logOut() {
             </ul>
             <ul v-else>
                 <li @click="logOut()">
-                    {{console.log(user)}}
                     Log Out
                 </li>
             </ul>

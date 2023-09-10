@@ -2,7 +2,7 @@
 // fetch discussions and post ids and titles
 
 const client = useSupabaseClient();
-const owner = useSupabaseUser().value.id;
+const user = useSupabaseUser();
 
 
 const { data: discussions } = await useAsyncData('discussions', async () => {
@@ -29,7 +29,7 @@ async function createPost() {
 
     const { data: post } = await useAsyncData('post', async () => {
         const { data, error } = await client.from('posts').insert({
-            owner: owner,
+            owner: user.value.id,
             discussion_id: discussion.value,
             title: title.value,
             content: content.value
