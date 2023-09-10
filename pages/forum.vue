@@ -64,7 +64,7 @@ function handleClose() {
                     <button id="show-modal" @click="showModal = true">Create Post</button>
                     <Teleport to="body">
 
-                        <modal :show="showModal" @close="handleClose(disc.posts)">
+                        <modal :show="showModal" @close="handleClose()">
                             <template #header>
                                 <h3>Create new post</h3>
                             </template>

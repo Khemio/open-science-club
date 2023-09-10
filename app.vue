@@ -2,24 +2,21 @@
 const user = useSupabaseUser()
 const client = useSupabaseClient();
 
-const { data: discussions } = await useAsyncData('discussions', async () => {
-    const { data, error } = await client.from('discussions').select(`
-        *,
-        posts(id, title)
-    `)
-    if(error) console.log(error);
+const { data: username } = await useAsyncData('username', async () => {
+    const { data, error } = await client.from('profiles').select(`
+        username
     
+    `)
+    .eq('id', user.value.id)
+    if(error) console.log(error);
     return data;
 })
 
-async function test() {
-  console.log(discussions);
-}
 </script>
 
 <template>
   <div class="min-h-screen flex flex-col justify-between">
-    {{ test() }}
+    <div class="bg-red-500 text-2xl text-green-400">{{ username }}</div>
     <Navigation />
     <NuxtPage/>
     <Footer />
