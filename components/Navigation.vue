@@ -13,6 +13,10 @@ console.log(user);
 //     if(error) console.log(error);
 //     return data;
 // })
+
+async function logOut() {
+    let { error } = await supabase.auth.signOut()
+}
 </script>
 
 <template>
@@ -43,7 +47,7 @@ console.log(user);
                     <div class="p-10 bg-red-500 text-2xl text-white">{{ user[0].username }}</div>
                 </li> -->
             </ul>
-            <ul v-if="!useSupabaseUser()" class="flex gap-5">
+            <ul v-if="!user" class="flex gap-5">
                 <li>
                     <NuxtLink to="/">
                         Apply
@@ -56,7 +60,7 @@ console.log(user);
                 </li>
             </ul>
             <ul v-else>
-                <li>
+                <li @click="logOut()">
                     {{console.log(user)}}
                     Log Out
                 </li>
