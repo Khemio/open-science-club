@@ -57,6 +57,7 @@ console.log(owner);
             </ul>
             <ul v-else>
                 <li>
+                    {{console.log(useSupabaseUser())}}
                     Log Out
                 </li>
             </ul>
