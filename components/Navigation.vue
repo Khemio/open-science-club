@@ -2,14 +2,16 @@
 const owner = useSupabaseUser().value.id;
 const client = useSupabaseClient();
 
-const { data: user } = await useAsyncData('user', async () => {
-    const { data, error } = await client.from('profiles').select(`
-        *
-    `)
-    .eq('id', owner)
-    if(error) console.log(error);
-    return data;
-})
+console.log(owner);
+
+// const { data: user } = await useAsyncData('user', async () => {
+//     const { data, error } = await client.from('profiles').select(`
+//         *
+//     `)
+//     .eq('id', owner)
+//     if(error) console.log(error);
+//     return data;
+// })
 </script>
 
 <template>
@@ -36,9 +38,9 @@ const { data: user } = await useAsyncData('user', async () => {
                         Profile
                     </NuxtLink>
                 </li>
-                <li>
+                <!-- <li>
                     <div class="p-10 bg-red-500 text-2xl text-white">{{ user[0].username }}</div>
-                </li>
+                </li> -->
             </ul>
             <ul v-if="!useSupabaseUser()" class="flex gap-5">
                 <li>
