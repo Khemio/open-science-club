@@ -2,6 +2,7 @@
 const client = useSupabaseClient()
 
 const loading = ref(true)
+const email = ref('')
 const username = ref('')
 const website = ref('')
 const avatar_path = ref('')
@@ -17,6 +18,7 @@ let { data } = await client
 
 if (data) {
   username.value = data.username
+  email.value = user.value.email;
   website.value = data.website
   avatar_path.value = data.avatar_url
 }
@@ -63,10 +65,10 @@ async function signOut() {
 
 <template>
     <form class="flex flex-col gap-5" @submit.prevent="updateProfile">
-        <ProfileAvatar class="w-max border border-black" v-model:path="avatar_path" @upload="updateProfile" />
-        <div class="flex gap-3">
+        <ProfileAvatar v-if="avatar_path" class="w-max border border-black" v-model:path="avatar_path" @upload="updateProfile" />
+        <div v-if="email" class="flex gap-3">
             <label for="email">Email</label>
-            <input id="email" type="text" :value="user.email" disabled />
+            <input  id="email" type="text" v-model="email" disabled />
         </div>
         <div class="flex gap-3">
             <label for="username">Name</label>

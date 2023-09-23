@@ -7,6 +7,22 @@ const user = useSupabaseUser();
 const showModal = ref(false)
 const content = ref('');
 
+const { data: is_admin } = await useAsyncData('role', async () => {
+    if (!user) return false;
+    const { data, error } = await client.from('profiles').select(`
+        is_admin
+    `)
+    .eq('id', user.value.id)
+    if(error) console.log(error);
+    // console.log(data[0].role)
+    return data[0].is_admin;
+})
+
+// Use server functions and composables
+function isAuthorized() {
+    if (is_admin.value) return true;
+}
+
 const { data: post } = await useAsyncData('post', async () => {
     const { data, error } = await client.from('posts').select(`
         *,
@@ -103,6 +119,7 @@ createComment();
                 <p>{{ comment.content }}</p>
                 <span>{{ comment.profiles.username }}</span>
             </div>
+            <DeleteBtn v-if="isAuthorized()" item="comments" :id="comment.id" />
 
             
         </li>

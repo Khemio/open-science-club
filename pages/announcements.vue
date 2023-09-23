@@ -2,6 +2,22 @@
 const client = useSupabaseClient();
 const user = useSupabaseUser();
 
+const { data: is_admin } = await useAsyncData('role', async () => {
+    if (!user) return false;
+    const { data, error } = await client.from('profiles').select(`
+        is_admin
+    `)
+    .eq('id', user.value.id)
+    if(error) console.log(error);
+    // console.log(data[0].role)
+    return data[0].is_admin;
+})
+
+// Use server functions and composables
+function isAuthorized() {
+    if (is_admin.value) return true;
+}
+
 const { data: announcements } = await useAsyncData('announcements', async () => {
     const { data, error } = await client.from('announcements').select(`
         id, title
@@ -15,11 +31,6 @@ const showModal = ref(false)
 // const discussion = ref('');
 const title = ref('');
 const content = ref('');
-
-// function handleClick(id) {
-//     showId.value = showId.value === id ? '' : id;
-    
-// }
 
 
 async function createAnnouncemnt() {
@@ -39,7 +50,6 @@ async function createAnnouncemnt() {
 }
 
 function handleClose() {
-    console.log(useSupabaseUser().value)
     showModal.value = false;
     createAnnouncemnt();
 }
@@ -47,9 +57,11 @@ function handleClose() {
 </script>
 
 <template>
-    <div class="w-11/12 mx-auto my-10 grid grid-cols-5 gap-5 min-h-screen border border-black">
-        <div class="col-span-4 border-r border-black">
-            <button id="show-modal" @click="showModal = true">Create Post</button>
+    <div class="w-11/12 mx-auto my-10">
+        <div class="px-5 py-3 flex justify-end border border-b-0 border-black">
+            <!-- Use server functions and composables -->
+            <button v-if="isAuthorized()"
+                id="show-modal" @click="showModal = true">Create Post</button>
                     <Teleport to="body">
 
                         <modal :show="showModal" @close="handleClose()">
@@ -81,28 +93,22 @@ function handleClose() {
                             </template>
                         </modal>
                     </Teleport>
-            <!-- {{console.log(discussions)}} -->
-            <div v-for="post in announcements" class="px-3 py-7 border-b border-black">
-                
-                <NuxtLink :to="`news/${post.id}`" >
-                    {{ post.title }}
-                </NuxtLink>
-
-                <!-- <div class="flex justify-between">
-                    
-                    
-                </div>
-                <ul v-if="showId === disc.name" class="ml-3 pl-3 border-l border-black">
-                    <li v-for="post in announcements">
-                        <NuxtLink :to="`posts/${post.id}`" >
-                            {{ post.title }}
-                        </NuxtLink>
-                    </li>
-                </ul> -->
-            </div>
         </div>
-        <div class="border-l border-black">
+        <div class="grid grid-cols-5 gap-5 min-h-screen border border-black">
+            <div class="col-span-4 border-r border-black">
+            
+                <!-- {{console.log(discussions)}} -->
+                <div v-for="post in announcements" class="px-3 py-7 flex justify-between border-b border-black">
+                    
+                    <NuxtLink :to="`news/${post.id}`" >
+                        {{ post.title }}
+                    </NuxtLink>
+                    <DeleteBtn v-if="isAuthorized()" item="announcements" :id="post.id" />
+                </div>
+            </div>
+            <div class="">
 
+            </div>
         </div>
     </div>
 

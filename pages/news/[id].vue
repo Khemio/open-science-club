@@ -47,7 +47,6 @@ createComment();
 
 <template>
     <div class="w-11/12 mx-auto my-10 flex flex-col min-h-screen border border-black">
-        {{ console.log(useSupabaseUser().value) }}
         <div class=" border-b border-black">
             <div class="w-full ml-auto pr-5 py-3 flex gap-5 justify-end border-b border-black">
                 <button>View staff comments</button>

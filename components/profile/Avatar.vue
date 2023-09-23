@@ -11,6 +11,7 @@ const src = ref('')
 const files = ref()
 
 const downloadImage = async () => {
+    if(!path.value) return;
   try {
     const { data, error } = await supabase.storage.from('avatars').download(path.value)
     if (error) throw error
