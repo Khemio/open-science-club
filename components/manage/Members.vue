@@ -80,8 +80,23 @@ function handleReject(id) {
     show.value = 'all';
 }
 
-function handlePromote(username) {
-    console.log(`Member ${username} has been promoted`);
+async function promoteMember(id) {
+    await useAsyncData('promote_member', async () => {
+        const { data, error } = await client.from('profiles')
+        .update({
+            // is_pending: false
+            is_admin: true
+        })
+        .eq('id', id)
+
+        if( error) console.log(error);
+        return;
+    })
+}
+
+function handlePromote(id) {
+    promoteMember(id);
+    // console.log(`Member ${username} has been promoted`);
 }
 
 function handleKick(username) {
@@ -114,8 +129,8 @@ function handleKick(username) {
 
             <h3 class="pl-2 grid grid-cols-1 place-content-center">{{ member.username }}</h3>
             <div class="flex gap-5">
-                <button class="btn rounded" @click="handlePromote(member.username)">Promote</button>
-                <button class="btn rounded" @click="handleKick(member.username)">Kick out</button>
+                <button v-if="!member.is_admin" class="btn rounded" @click="handlePromote(member.id)">Promote</button>
+                <button class="btn rounded" @click="handleKick(member.id)">Kick out</button>
             </div>
         
         </div>
