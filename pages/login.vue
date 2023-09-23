@@ -2,7 +2,6 @@
 const client = useSupabaseClient();
 
 const config = useRuntimeConfig()
-// const url = 'https://open-science-club.vercel.app/';
 const url = config.public.url;
 
 const loading = ref(false);
@@ -15,7 +14,8 @@ const otpLogin = async () => {
         loading.value = true
         const { error } = await client.auth.signInWithOtp({ email: email.value ,
             options: {
-                emailRedirectTo: url
+                emailRedirectTo: url,
+                shouldCreateUser: false
             }
         })
 

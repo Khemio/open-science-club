@@ -46,13 +46,13 @@ async function logOut() {
                         Announcements
                     </NuxtLink>
                 </li>
-                <li>
+                <li v-if="isAuthorized()">
                     <NuxtLink to="/profile">
                         Profile
                     </NuxtLink>
                 </li>
                 <!-- Use server functions and composables, add middleware and guards -->
-                <li v-if="isAuthorized()">
+                <li v-if="user">
                     <NuxtLink to="/resources">
                         Resources
                     </NuxtLink>
@@ -68,7 +68,7 @@ async function logOut() {
             </ul>
             <ul v-if="!user" class="flex gap-5">
                 <li>
-                    <NuxtLink to="/">
+                    <NuxtLink to="/apply">
                         Apply
                     </NuxtLink>
                 </li>

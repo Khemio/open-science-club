@@ -27,7 +27,7 @@ const { data: is_admin } = await useAsyncData('role', async () => {
 
 <template>
 <div class="w-11/12 mx-auto my-10 grid grid-cols-7 gap-5">
-    <div class="p-3 border border-black col-span-1">
+    <div class="h-max p-3 border border-black col-span-1">
         <ul class="flex flex-col gap-5">
             <li id="posts">
             <button @click="(e) => changeView(e)">
